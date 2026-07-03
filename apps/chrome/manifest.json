@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Dots Capture",
+  "version": "0.1.0",
+  "description": "Capture the page you're reading — full text into your Dots vault, exactly as you see it.",
+  "icons": {
+    "16": "icons/dot-16.png",
+    "32": "icons/dot-32.png",
+    "48": "icons/dot-48.png",
+    "128": "icons/dot-128.png"
+  },
+  "action": {
+    "default_title": "Capture in Dots",
+    "default_icon": {
+      "16": "icons/dot-16.png",
+      "32": "icons/dot-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["activeTab", "scripting", "nativeMessaging"],
+  "commands": {
+    "capture-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+D",
+        "mac": "Alt+Shift+D"
+      },
+      "description": "Capture this page in Dots"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+name: Dots
+options:
+  deploymentTarget:
+    macOS: "27.0"
+packages:
+  Dots:
+    path: ../../packages/Dots
+targets:
+  Dots:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources
+    dependencies:
+      - package: Dots
+        product: DotsRoot
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: blog.dots.macos
+        PRODUCT_NAME: Dots
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGN_IDENTITY: "-"
+        ENABLE_HARDENED_RUNTIME: NO
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Dots
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_NSHumanReadableCopyright: ""
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Dots listens while you dictate ideas and drafts."
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Dots transcribes your dictation entirely on this Mac."

@@ -1,0 +1,134 @@
+included:
+  - apps
+  - packages
+  - tools
+
+excluded:
+  - .build
+  - .docs
+  - DerivedData
+  - packages/**/.build
+  - tools/**/.build
+
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+
+opt_in_rules:
+  - array_init
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - fallthrough
+  - fatal_error_message
+  - first_where
+  - last_where
+  - literal_expression_end_indentation
+  - multiline_arguments
+  - multiline_literal_brackets
+  - multiline_parameters
+  - operator_usage_whitespace
+  - overridden_super_call
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - vertical_parameter_alignment_on_call
+
+custom_rules:
+  no_environment_in_model:
+    included: ".*Model\\.swift"
+    regex: "@Environment"
+    message: "Models get dependencies through init, not SwiftUI Environment."
+    severity: error
+
+  no_io_in_views:
+    included: ".*(Screen|View|Content)\\.swift"
+    regex: "URLSession|FileManager|SwiftData|\\.shared\\b"
+    message: "Views do no I/O; delegate to a feature or boundary client."
+    severity: error
+
+  no_live_outside_composition:
+    included: ".*packages/Dots/Sources/DotsFeatures/.*\\.swift"
+    regex: "\\w+(Client|Store|Provider)Live\\("
+    excluded: ".*(App|Root|RootScreen|\\+Environment|Tests)\\.swift"
+    message: "Live implementations are wired only at composition roots or tests."
+    severity: error
+
+  no_public_import_outside_facade:
+    included: ".*packages/Dots/Sources/Dots(Features|Root)/.*\\.swift"
+    regex: "^public import (?!ComposableArchitecture2|DotsDomain|DotsEngine|DotsUI|Foundation)"
+    excluded: ".*(Screen|RootScreen|App)\\.swift"
+    message: "public import is a facade decision; use plain import unless the public API needs re-export. (@Feature files may publicly import ComposableArchitecture2 — the macro emits public conformances.)"
+    severity: error
+
+  no_broad_source_swiftlint_disable:
+    included: ".*packages/Dots/Sources/.*\\.swift"
+    regex: "swiftlint:disable.*(file_length|type_body_length|function_body_length)"
+    message: "Do not hide broad source shape issues; split the file or function."
+    severity: error
+
+  no_unchecked_sendable:
+    regex: "@unchecked Sendable|nonisolated\\(unsafe\\)"
+    message: "No Swift concurrency escape hatches."
+    severity: error
+
+  banned_type_names:
+    regex: "(class|struct|enum)\\s+\\w*(Manager|Service|Helper|Util|ViewModel|Network|API)\\b"
+    message: "Use Client, Store, Provider, Domain type, Feature, Screen, or Component."
+    severity: error
+
+disabled_rules:
+  - todo
+
+line_length:
+  warning: 220
+  error: 260
+  ignores_comments: true
+  ignores_urls: true
+  ignores_function_declarations: true
+
+file_length:
+  warning: 900
+  error: 1200
+
+function_body_length:
+  warning: 140
+  error: 180
+
+function_parameter_count:
+  warning: 8
+  error: 10
+
+cyclomatic_complexity:
+  warning: 20
+  error: 25
+
+type_body_length:
+  warning: 360
+  error: 500
+
+identifier_name:
+  min_length:
+    warning: 1
+    error: 1
+  excluded:
+    - id
+    - x
+    - y
+
+type_name:
+  min_length:
+    warning: 2
+    error: 2
+  excluded:
+    - ID
+
+reporter: xcode

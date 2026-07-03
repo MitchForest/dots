@@ -1,0 +1,27 @@
+project: apps/macos/Dots.xcodeproj
+schemes:
+  - Dots
+retain_public: false
+disable_redundant_public_analysis: false
+retain_codable_properties: true
+# Format commands dispatch dynamically down the responder chain
+# (NSApp.sendAction from menus/format bar) — invisible to static analysis.
+retain_objc_accessible: true
+retain_swift_ui_previews: true
+retain_files:
+  # The design system is intentionally public surface: components are
+  # showcased in the gallery and adopted per milestone. Product packages
+  # (Domain/Engine/Clients/Features) get no such retention — dead code
+  # there is a finding.
+  - packages/DotsUI/Sources/DotsUI/**
+strict: true
+relative_results: true
+index_exclude:
+  - .build/**
+  - .docs/**
+  - DerivedData/**
+  - packages/**/.build/**
+report_include:
+  - apps/**
+  - packages/**
+  - tools/**
